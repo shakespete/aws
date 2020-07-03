@@ -34,7 +34,7 @@ We don't need to create or manage the router, but we can configure routing by cr
 ![alt text](https://github.com/shakespete/aws/blob/master/img/routing_2.png)
 
 <h3>NACLs</h3>
-Network access control lists serves as a firewall for subnets.
+<p>Network access control lists serves as a firewall for subnets.</p>
 
 The public subnet is intended to allow our load balancer to communicate directly with the internet and to allow hosts on the internet to reach in and initiate new connections to our load balancer. Our private subnet is intended to keep our private application servers private. You'll notice that they can communicate with the load balancer but they don't communicate to the internet directly. We want to provide a firewall for our public subnet, for the subnet as a whole, no matter what devices might be in use, not matter what security groups are in use within that subnet, we want to protect the subnet as a whole. We can do that by applying a network access control list. So we create the network access control list and then we associate it with that particular subnet.
 
@@ -45,7 +45,7 @@ We are allowing ports 80 and 443 to come into the subnet from anywhere. You'll s
 Network Access Control Lists are stateless. They do not recognize responses as being responses. We have to open ports for every port that needed to go out.
 
 <h3>Security Groups</h3>
-Security Groups are firewalls that are applied to individual instances or other devices like load balancers.
+<p>Security Groups are firewalls that are applied to individual instances or other devices like load balancers.</p>
 
 <ul>
   <li>Stateful. They do recognize responses as being responses.</li>
@@ -64,6 +64,26 @@ We could take this a step further, we could also apply this to our database. And
 
 ![alt text](https://github.com/shakespete/aws/blob/master/img/security_group_2.png)
 
+<h3>VPC Peering</h3>
+
+<ul>
+  <li>Connection between 2 VPCs</li>
+  <li>Helps segregate networks</li>
+  <li>No bottleneck or single point of failure</li>
+  <li>IP ranges must not overlap</li>
+  <li>Can peer between accounts</li>
+  <li>Always 1-1</li>
+  <li>No transitive peering</li>
+  <li>No edge-to-edge routing</li>
+  <li>$/GB bandwidth</li>
+</ul>
+
+![alt text](https://github.com/shakespete/aws/blob/master/img/vpc_peering_1.png)
+
+Peering 2 VPCs will need to update Route Table
+
+![alt text](https://github.com/shakespete/aws/blob/master/img/vpc_peering_2.png)
+
 
 <h2>Network Setup</h2>
 <ol>
@@ -72,4 +92,5 @@ We could take this a step further, we could also apply this to our database. And
   <li>Create Internet Gateway and attach to corresponding VPC</li>
   <li>Create and configure Route Table then associate to appropriate subnet</li>
   <li>Create NACL, edit Inbound and Outbound rules, and associate to appropriate subnet</li>
+  <li>Create Security Group then edit Ingress and Egress rules</li>
 </ol>
